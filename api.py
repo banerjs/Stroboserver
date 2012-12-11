@@ -8,7 +8,6 @@ def send_gcm_message(api_key, reg_id, data, collapse_key=None):
         "collapse_key": collapse_key,
         "data": data,
         "time_to_live": 120,
-        "dry-run": True,
     }
 
     values = json.dumps(values)
