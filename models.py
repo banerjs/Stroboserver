@@ -53,15 +53,19 @@ class Device(models.Model):
 
     def save(self, debug=False, *args, **kwargs):
        if self.cluster_id != 'NONE':
-          cluster = Cluster.objects.get(cluster_id=self.cluster_id)
-          freq = int(cluster.frequency)
-          msg = {'frequency':freq, 'cluster':self.cluster_id}
           try:
-             ret = self.send_message(msg)
+             cluster = Cluster.objects.get(cluster_id=self.cluster_id)
+             freq = int(cluster.frequency)
+             msg = {'frequency':freq, 'cluster':self.cluster_id}
+             try:
+                ret = self.send_message(msg)
+             except Exception as e:
+                ret = e
+                if debug:
+                   print ret
           except Exception as e:
-             ret = e
-          if debug:
-             print ret
+             if debug:
+                print e
        super(Device, self).save(*args, **kwargs)
 
 
