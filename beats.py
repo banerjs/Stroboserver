@@ -100,12 +100,13 @@ def get_global_beats(music):
     return music
 
 def get_subband_beats(music, energies):
+    global ENERGY_THRESHOLD
     beats = np.zeros(energies.shape)
     for counter in xrange(energies.shape[0]):
         buff = energies[counter:counter+music.navgcalc,:]
         avg = (1.0/buff.shape[0])*np.sum(buff,0)
         for i in xrange(energies.shape[1]):
-            beats[counter,i] = energies[counter,i]/avg[i] if energies[counter,i] > avg[i] else 0
+            beats[counter,i] = energies[counter,i]/avg[i] if energies[counter,i] > ENERGY_THRESHOLD*avg[i] else 0
 
     music.beats = beats
     return music

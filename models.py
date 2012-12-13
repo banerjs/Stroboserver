@@ -66,6 +66,8 @@ class Device(models.Model):
           except Exception as e:
              if debug:
                 print e
+       if debug:
+          print ret
        super(Device, self).save(*args, **kwargs)
 
 
